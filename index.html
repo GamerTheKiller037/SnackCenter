@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snack Center - Aguascalientes</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Modal de Inicio (Splash Screen) -->
+    <div id="splashModal" class="modal active">
+      <div class="modal-content modal-splash">
+        <div class="splash-container">
+          <div class="splash-logo">
+            <i class="fas fa-hamburger"></i>
+          </div>
+          <h1>SNACK CENTER</h1>
+          <p>Accede a tu cuenta o regístrate para comenzar</p>
+
+          <div class="splash-tabs">
+            <button class="splash-tab active" data-tab="login">
+              Iniciar Sesión
+            </button>
+            <button class="splash-tab" data-tab="register">Registrarse</button>
+          </div>
+
+          <!-- Login Form -->
+          <form id="splashLoginForm" class="splash-form active">
+            <div class="form-group">
+              <label>Correo Electrónico</label>
+              <input
+                type="email"
+                id="splashLoginEmail"
+                placeholder="tu@email.com"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Contraseña</label>
+              <input
+                type="password"
+                id="splashLoginPassword"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <button type="submit" class="btn-primary btn-block">
+              <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+            </button>
+            <p class="admin-hint">Admin: admin@snackcenter.com / admin123</p>
+          </form>
+
+          <!-- Register Form -->
+          <form id="splashRegisterForm" class="splash-form">
+            <div class="form-group">
+              <label>Nombre Completo</label>
+              <input
+                type="text"
+                id="splashRegName"
+                placeholder="Juan Pérez"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Correo Electrónico</label>
+              <input
+                type="email"
+                id="splashRegEmail"
+                placeholder="tu@email.com"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Teléfono</label>
+              <input
+                type="tel"
+                id="splashRegPhone"
+                placeholder="449-123-4567"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Dirección</label>
+              <input
+                type="text"
+                id="splashRegAddress"
+                placeholder="Calle, Colonia, Aguascalientes"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Contraseña</label>
+              <input
+                type="password"
+                id="splashRegPassword"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Confirmar Contraseña</label>
+              <input
+                type="password"
+                id="splashRegPasswordConfirm"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <button type="submit" class="btn-primary btn-block">
+              <i class="fas fa-user-plus"></i> Crear Cuenta
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenedor Principal -->
+    <div id="mainContainer" class="main-container" style="display: none">
+      <!-- Header -->
+      <header class="main-header">
+        <div class="container">
+          <div class="header-content">
+            <div class="logo">
+              <i class="fas fa-hamburger"></i>
+              <h1>SNACK CENTER</h1>
+            </div>
+            <nav class="main-nav">
+              <a href="#" class="nav-link active" onclick="showPage('inicio')"
+                >Inicio</a
+              >
+              <a href="#" class="nav-link" onclick="showPage('menu')">Menú</a>
+              <a href="#" class="nav-link" onclick="showPage('contacto')"
+                >Contacto</a
+              >
+            </nav>
+            <div class="header-actions">
+              <button id="cartBtnHeader" class="icon-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+              </button>
+              <button id="userBtnHeader" class="icon-btn">
+                <i class="fas fa-user"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- User Menu Dropdown -->
+      <div id="userMenuDropdown" class="user-menu-dropdown">
+        <div class="user-menu-guest">
+          <button id="loginBtnDropdown" class="btn-secondary btn-full">
+            Iniciar Sesión
+          </button>
+          <button id="registerBtnDropdown" class="btn-primary btn-full">
+            Registrarse
+          </button>
+        </div>
+        <div class="user-menu-logged" style="display: none">
+          <div class="user-info">
+            <i class="fas fa-user-circle"></i>
+            <span id="userNameDropdown">Usuario</span>
+          </div>
+          <button id="profileBtnDropdown" class="menu-item">
+            <i class="fas fa-user-edit"></i> Mi Perfil
+          </button>
+          <button id="ordersBtnDropdown" class="menu-item">
+            <i class="fas fa-history"></i> Mis Pedidos
+          </button>
+          <button id="adminBtnDropdown" class="menu-item" style="display: none">
+            <i class="fas fa-cog"></i> Panel Admin
+          </button>
+          <button id="logoutBtnDropdown" class="menu-item logout">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+          </button>
+        </div>
+      </div>
+
+      <!-- Página Inicio -->
+      <div id="pageInicio" class="page">
+        <section class="hero-section">
+          <div class="container">
+            <div class="hero-content">
+              <h2>SNACK CENTER</h2>
+              <p>La mejor comida rápida de Aguascalientes</p>
+              <button class="btn-primary btn-large" onclick="showPage('menu')">
+                Ver Menú
+              </button>
+            </div>
+            <div class="hero-image">
+              <img src="assets/hero-banner.jpg" alt="Banner Principal" />
+            </div>
+          </div>
+        </section>
+
+        <section class="productos-destacados">
+          <div class="container">
+            <h2 class="section-title">Productos Destacados</h2>
+            <div class="productos-grid" id="productosDestacados">
+              <!-- Se llena dinámicamente -->
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Página Menú -->
+      <div id="pageMenu" class="page" style="display: none">
+        <section class="menu-section">
+          <div class="container">
+            <h2 class="section-title">Nuestro Menú</h2>
+
+            <div class="category-filters">
+              <button class="filter-btn active" data-category="todos">
+                Todos
+              </button>
+              <button class="filter-btn" data-category="hamburguesas">
+                Hamburguesas
+              </button>
+              <button class="filter-btn" data-category="hotdogs">
+                Hot Dogs
+              </button>
+              <button class="filter-btn" data-category="bebidas">
+                Bebidas
+              </button>
+              <button class="filter-btn" data-category="acompañamientos">
+                Acompañamientos
+              </button>
+            </div>
+
+            <div class="products-grid" id="productsGridMenu">
+              <!-- Se llena dinámicamente -->
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Página Contacto -->
+      <div id="pageContacto" class="page" style="display: none">
+        <section class="contacto-section">
+          <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <div class="contacto-content">
+              <div class="contacto-info">
+                <div class="info-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <div>
+                    <h3>Dirección</h3>
+                    <p>Avenida Principal #123<br />Aguascalientes, AGS 20000</p>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <i class="fas fa-phone"></i>
+                  <div>
+                    <h3>Teléfono</h3>
+                    <p>+52 449 123 4567</p>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <i class="fas fa-envelope"></i>
+                  <div>
+                    <h3>Email</h3>
+                    <p>info@snackcenter.com</p>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <i class="fas fa-clock"></i>
+                  <div>
+                    <h3>Horario</h3>
+                    <p>Lun - Dom: 10:00 AM - 10:00 PM</p>
+                  </div>
+                </div>
+              </div>
+              <div class="contacto-whatsapp">
+                <h3>¿Tienes alguna pregunta?</h3>
+                <p>Contáctanos directamente por WhatsApp</p>
+                <button id="whatsappBtn" class="btn-whatsapp">
+                  <i class="fab fa-whatsapp"></i> Chatear por WhatsApp
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Modal del Carrito (Pantalla Completa) -->
+      <div id="cartModal" class="modal">
+        <div class="modal-content modal-cart">
+          <span class="close close-cart">&times;</span>
+          <div class="cart-container">
+            <h2>Carrito de Compras</h2>
+            <div class="cart-items" id="cartItemsModal">
+              <p class="empty-cart">Tu carrito está vacío</p>
+            </div>
+            <div class="cart-summary">
+              <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotalModal">$0.00</span>
+              </div>
+              <button id="checkoutBtnCart" class="btn-primary btn-block">
+                Proceder con la Compra
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de Checkout -->
+      <div id="checkoutModal" class="modal">
+        <div class="modal-content modal-checkout">
+          <span class="close">&times;</span>
+          <div class="checkout-container">
+            <h2>Finalizar Compra</h2>
+
+            <div class="checkout-summary">
+              <h3>Resumen del Pedido</h3>
+              <div id="checkoutItems" class="checkout-items"></div>
+              <div class="checkout-total">
+                <span>Total a Pagar:</span>
+                <span id="checkoutTotal">$0.00</span>
+              </div>
+            </div>
+
+            <div class="payment-methods">
+              <h3>Método de Pago</h3>
+              <div class="payment-options">
+                <label class="payment-option">
+                  <input type="radio" name="payment" value="efectivo" checked />
+                  <div class="option-content">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Efectivo</span>
+                  </div>
+                </label>
+                <label class="payment-option">
+                  <input type="radio" name="payment" value="transferencia" />
+                  <div class="option-content">
+                    <i class="fas fa-university"></i>
+                    <span>Transferencia</span>
+                  </div>
+                </label>
+                <label class="payment-option">
+                  <input type="radio" name="payment" value="paypal" />
+                  <div class="option-content">
+                    <i class="fab fa-paypal"></i>
+                    <span>PayPal</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <button id="confirmOrderBtn" class="btn-primary btn-block">
+              Confirmar Pedido
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de Perfil -->
+      <div id="profileModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div class="profile-container">
+            <h2>Mi Perfil</h2>
+            <form id="profileForm">
+              <div class="form-group">
+                <label>Nombre Completo</label>
+                <input type="text" id="profileName" required />
+              </div>
+              <div class="form-group">
+                <label>Correo Electrónico</label>
+                <input type="email" id="profileEmail" required />
+              </div>
+              <div class="form-group">
+                <label>Teléfono</label>
+                <input type="tel" id="profilePhone" required />
+              </div>
+              <div class="form-group">
+                <label>Dirección</label>
+                <input type="text" id="profileAddress" required />
+              </div>
+              <button type="submit" class="btn-primary btn-block">
+                Guardar Cambios
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de Pedidos -->
+      <div id="ordersModal" class="modal">
+        <div class="modal-content modal-large">
+          <span class="close">&times;</span>
+          <div class="orders-container">
+            <h2>Historial de Pedidos</h2>
+            <div id="ordersList" class="orders-list">
+              <!-- Se llena dinámicamente -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de Admin -->
+      <div id="adminModal" class="modal">
+        <div class="modal-content modal-admin">
+          <span class="close">&times;</span>
+          <div class="admin-container">
+            <h2>Panel de Administración</h2>
+
+            <div class="admin-tabs">
+              <button class="admin-tab active" data-tab="products">
+                Productos
+              </button>
+              <button class="admin-tab" data-tab="orders">Pedidos</button>
+            </div>
+
+            <!-- Productos -->
+            <div id="adminProducts" class="admin-section active">
+              <div class="admin-header">
+                <h3>Gestión de Productos</h3>
+                <button id="addProductBtn" class="btn-primary">
+                  <i class="fas fa-plus"></i> Agregar Producto
+                </button>
+              </div>
+              <div id="adminProductsList" class="admin-list"></div>
+            </div>
+
+            <!-- Pedidos -->
+            <div id="adminOrders" class="admin-section">
+              <div class="admin-header">
+                <h3>Gestión de Pedidos</h3>
+              </div>
+              <div id="adminOrdersList" class="admin-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal para Agregar/Editar Producto -->
+      <div id="productFormModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div class="form-container">
+            <h2 id="productFormTitle">Agregar Producto</h2>
+            <form id="productForm">
+              <input type="hidden" id="productId" />
+              <div class="form-group">
+                <label>Nombre del Producto</label>
+                <input type="text" id="productName" required />
+              </div>
+              <div class="form-group">
+                <label>Descripción</label>
+                <textarea id="productDescription" rows="3" required></textarea>
+              </div>
+              <div class="form-group">
+                <label>Precio</label>
+                <input type="number" id="productPrice" step="0.01" required />
+              </div>
+              <div class="form-group">
+                <label>Categoría</label>
+                <select id="productCategory" required>
+                  <option value="hamburguesas">Hamburguesas</option>
+                  <option value="hotdogs">Hot Dogs</option>
+                  <option value="bebidas">Bebidas</option>
+                  <option value="acompañamientos">Acompañamientos</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Imagen</label>
+                <input
+                  type="text"
+                  id="productImage"
+                  placeholder="burger-classic.jpg"
+                />
+              </div>
+              <button type="submit" class="btn-primary btn-block">
+                Guardar Producto
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de Ticket -->
+      <div id="ticketModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div class="ticket-container" id="ticketContent"></div>
+          <div class="ticket-actions">
+            <button id="printTicketBtn" class="btn-secondary">
+              <i class="fas fa-print"></i> Imprimir
+            </button>
+            <button id="whatsappOrderBtn" class="btn-whatsapp">
+              <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="main-footer">
+        <div class="container">
+          <div class="footer-content">
+            <div class="footer-section">
+              <h3>SNACK CENTER</h3>
+              <p>
+                La mejor comida rápida de Aguascalientes. Ingredientes frescos y
+                sabor auténtico.
+              </p>
+            </div>
+            <div class="footer-section">
+              <h4>Contacto</h4>
+              <ul>
+                <li><strong>Dirección:</strong> Avenida Principal #123</li>
+                <li><strong>Teléfono:</strong> +52 449 123 4567</li>
+                <li><strong>Email:</strong> info@snackcenter.com</li>
+              </ul>
+            </div>
+            <div class="footer-section">
+              <h4>Síguenos</h4>
+              <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 Snack Center. Todos los derechos reservados.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Inicialización básica
+      window.addEventListener("load", function () {
+        if (localStorage.getItem("currentUser")) {
+          document.getElementById("splashModal").classList.remove("active");
+          document.getElementById("mainContainer").style.display = "block";
+          initializeData();
+          renderProductosDestacados();
+          renderProductsMenu();
+        }
+      });
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
