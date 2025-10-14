@@ -256,7 +256,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setupEventListeners() {
-  // Splash
   document.querySelectorAll(".splash-tab").forEach((btn) => {
     btn.addEventListener("click", function () {
       const tab = this.dataset.tab;
@@ -282,7 +281,6 @@ function setupEventListeners() {
     .getElementById("splashRegisterForm")
     .addEventListener("submit", handleSplashRegister);
 
-  // Header
   document
     .getElementById("userBtnHeader")
     .addEventListener("click", toggleUserMenu);
@@ -317,7 +315,6 @@ function setupEventListeners() {
     .getElementById("adminBtnDropdown")
     .addEventListener("click", openAdminModal);
 
-  // Modales
   document.querySelectorAll(".close").forEach((closeBtn) => {
     closeBtn.addEventListener("click", function () {
       this.closest(".modal").classList.remove("active");
@@ -330,18 +327,6 @@ function setupEventListeners() {
     }
   });
 
-  // Filtros de categoría
-  document.querySelectorAll(".filter-btn").forEach((btn) => {
-    btn.addEventListener("click", function () {
-      document
-        .querySelectorAll(".filter-btn")
-        .forEach((b) => b.classList.remove("active"));
-      this.classList.add("active");
-      filterProducts(this.dataset.category);
-    });
-  });
-
-  // Forms
   document
     .getElementById("profileForm")
     .addEventListener("submit", handleProfileUpdate);
@@ -349,7 +334,6 @@ function setupEventListeners() {
     .getElementById("productForm")
     .addEventListener("submit", handleProductSave);
 
-  // Admin
   document
     .getElementById("addProductBtn")
     .addEventListener("click", openProductFormModal);
@@ -382,10 +366,6 @@ function setupEventListeners() {
   document
     .getElementById("confirmOrderBtn")
     .addEventListener("click", confirmOrder);
-
-  document
-    .getElementById("whatsappBtn")
-    .addEventListener("click", openWhatsApp);
 
   document
     .getElementById("printTicketBtn")
@@ -421,6 +401,9 @@ function showPage(pageName) {
     }
   });
 
+  if (typeof loadPageContent === "function") {
+    loadPageContent(pageName);
+  }
   window.scrollTo(0, 0);
 }
 
@@ -438,12 +421,11 @@ function handleSplashLogin(e) {
     updateUserUI();
     document.getElementById("splashModal").classList.remove("active");
     document.getElementById("mainContainer").style.display = "block";
-    renderProductosDestacados();
-    renderProductsMenu();
+    loadPageContent("inicio");
     showNotification("¡Bienvenido " + user.name + "!");
     e.target.reset();
   } else {
-    alert("Credenciales incorrectas");
+    alert("Credenciales incorrectos");
   }
 }
 
@@ -487,8 +469,7 @@ function handleSplashRegister(e) {
   updateUserUI();
   document.getElementById("splashModal").classList.remove("active");
   document.getElementById("mainContainer").style.display = "block";
-  renderProductosDestacados();
-  renderProductsMenu();
+  loadPageContent("inicio");
   showNotification("¡Cuenta creada exitosamente!");
   e.target.reset();
 }
@@ -555,75 +536,6 @@ function logout() {
   updateCartUI();
   document.getElementById("userMenuDropdown").classList.remove("active");
   showNotification("Sesión cerrada exitosamente");
-}
-
-function renderProductosDestacados() {
-  const grid = document.getElementById("productosDestacados");
-  const destacados = products.slice(0, 3);
-
-  grid.innerHTML = destacados
-    .map(
-      (product) => `
-        <div class="product-card">
-            <div class="product-image">
-                <img src="assets/${product.image}" alt="${product.name}">
-            </div>
-            <div class="product-info">
-                <h3>${product.name}</h3>
-                <p>${product.description}</p>
-                <div class="product-footer">
-                    <span class="product-price">$${product.price.toFixed(
-                      2
-                    )}</span>
-                    <button class="add-to-cart-btn" onclick="addToCart(${
-                      product.id
-                    })">
-                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
-                    </button>
-                </div>
-            </div>
-        </div>
-    `
-    )
-    .join("");
-}
-
-function renderProductsMenu(category = "todos") {
-  const grid = document.getElementById("productsGridMenu");
-  const filtered =
-    category === "todos"
-      ? products
-      : products.filter((p) => p.category === category);
-
-  grid.innerHTML = filtered
-    .map(
-      (product) => `
-        <div class="product-card">
-            <div class="product-image">
-                <img src="assets/${product.image}" alt="${product.name}">
-            </div>
-            <div class="product-info">
-                <h3>${product.name}</h3>
-                <p>${product.description}</p>
-                <div class="product-footer">
-                    <span class="product-price">$${product.price.toFixed(
-                      2
-                    )}</span>
-                    <button class="add-to-cart-btn" onclick="addToCart(${
-                      product.id
-                    })">
-                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
-                    </button>
-                </div>
-            </div>
-        </div>
-    `
-    )
-    .join("");
-}
-
-function filterProducts(category) {
-  renderProductsMenu(category);
 }
 
 function addToCart(productId) {
@@ -847,15 +759,6 @@ function sendOrderWhatsApp() {
   message += `\n*TOTAL: $${order.total.toFixed(2)}*`;
 
   const whatsappNumber = "5214491234567";
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    message
-  )}`;
-  window.open(url, "_blank");
-}
-
-function openWhatsApp() {
-  const whatsappNumber = "5214491234567";
-  const message = "¡Hola! Me gustaría hacer una consulta sobre sus productos.";
   const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     message
   )}`;
@@ -1100,7 +1003,7 @@ function deleteProduct(productId) {
 
   products = products.filter((p) => p.id !== productId);
   saveToLocalStorage();
-  renderProductsMenu();
+  renderMenuProducts("todos");
   renderProductosDestacados();
   renderAdminProducts();
   showNotification("Producto eliminado");
@@ -1129,7 +1032,7 @@ function handleProductSave(e) {
   }
 
   saveToLocalStorage();
-  renderProductsMenu();
+  renderMenuProducts("todos");
   renderProductosDestacados();
   renderAdminProducts();
   document.getElementById("productFormModal").classList.remove("active");

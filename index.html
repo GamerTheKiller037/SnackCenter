@@ -192,166 +192,13 @@
       </div>
 
       <!-- Página Inicio -->
-      <div id="pageInicio" class="page active">
-        <section
-          class="hero-section"
-          style="background-image: url('assets/hero-banner.jpg')"
-        >
-          <div class="hero-overlay">
-            <div class="container">
-              <div class="hero-content">
-                <h2>SNACK CENTER</h2>
-                <p>La mejor comida rápida de Aguascalientes</p>
-                <div class="hero-buttons">
-                  <button
-                    class="btn-primary btn-large"
-                    onclick="showPage('menu'); return false;"
-                  >
-                    Ver Menú
-                  </button>
-                  <button
-                    class="btn-primary btn-large"
-                    onclick="showPage('contacto'); return false;"
-                  >
-                    Contactar
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="productos-destacados">
-          <div class="container">
-            <h2 class="section-title">Productos Destacados</h2>
-            <div class="productos-grid" id="productosDestacados">
-              <!-- Se llena dinámicamente -->
-            </div>
-            <div class="ver-todos-container">
-              <button
-                class="btn-ver-todos"
-                onclick="showPage('menu'); return false;"
-              >
-                Ver Todos los Productos <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section class="cta-section">
-          <div class="container">
-            <div class="cta-content">
-              <h3>¿Listo para ordenar?</h3>
-              <p>
-                Haz tu pedido ahora y disfruta de la mejor comida rápida de
-                Aguascalientes
-              </p>
-              <button class="btn-cta" onclick="showPage('menu'); return false;">
-                Ordenar Ahora <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-        </section>
-      </div>
+      <div id="pageInicio" class="page active"></div>
 
       <!-- Página Menú -->
-      <div id="pageMenu" class="page" style="display: none">
-        <section class="menu-section">
-          <div class="container">
-            <h2 class="section-title">Nuestro Menú</h2>
-
-            <div class="category-filters">
-              <button
-                class="filter-btn active"
-                data-category="todos"
-                onclick="filterProducts('todos'); return false;"
-              >
-                Todos
-              </button>
-              <button
-                class="filter-btn"
-                data-category="hamburguesas"
-                onclick="filterProducts('hamburguesas'); return false;"
-              >
-                Hamburguesas
-              </button>
-              <button
-                class="filter-btn"
-                data-category="hotdogs"
-                onclick="filterProducts('hotdogs'); return false;"
-              >
-                Hot Dogs
-              </button>
-              <button
-                class="filter-btn"
-                data-category="bebidas"
-                onclick="filterProducts('bebidas'); return false;"
-              >
-                Bebidas
-              </button>
-              <button
-                class="filter-btn"
-                data-category="acompañamientos"
-                onclick="filterProducts('acompañamientos'); return false;"
-              >
-                Acompañamientos
-              </button>
-            </div>
-
-            <div class="products-grid" id="productsGridMenu">
-              <!-- Se llena dinámicamente -->
-            </div>
-          </div>
-        </section>
-      </div>
+      <div id="pageMenu" class="page" style="display: none"></div>
 
       <!-- Página Contacto -->
-      <div id="pageContacto" class="page" style="display: none">
-        <section class="contacto-section">
-          <div class="container">
-            <h2 class="section-title">Contacto</h2>
-            <div class="contacto-content">
-              <div class="contacto-info">
-                <div class="info-item">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <div>
-                    <h3>Dirección</h3>
-                    <p>Avenida Principal #123<br />Aguascalientes, AGS 20000</p>
-                  </div>
-                </div>
-                <div class="info-item">
-                  <i class="fas fa-phone"></i>
-                  <div>
-                    <h3>Teléfono</h3>
-                    <p>+52 449 123 4567</p>
-                  </div>
-                </div>
-                <div class="info-item">
-                  <i class="fas fa-envelope"></i>
-                  <div>
-                    <h3>Email</h3>
-                    <p>info@snackcenter.com</p>
-                  </div>
-                </div>
-                <div class="info-item">
-                  <i class="fas fa-clock"></i>
-                  <div>
-                    <h3>Horario</h3>
-                    <p>Lun - Dom: 10:00 AM - 10:00 PM</p>
-                  </div>
-                </div>
-              </div>
-              <div class="contacto-whatsapp">
-                <h3>¿Tienes alguna pregunta?</h3>
-                <p>Contáctanos directamente por WhatsApp</p>
-                <button id="whatsappBtn" class="btn-whatsapp">
-                  <i class="fab fa-whatsapp"></i> Chatear por WhatsApp
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
+      <div id="pageContacto" class="page" style="display: none"></div>
 
       <!-- Modal del Carrito -->
       <div id="cartModal" class="modal">
@@ -602,5 +449,6 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="pages.js"></script>
   </body>
 </html>
