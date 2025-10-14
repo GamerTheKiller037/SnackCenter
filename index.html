@@ -129,11 +129,22 @@
               <h1>SNACK CENTER</h1>
             </div>
             <nav class="main-nav">
-              <a href="#" class="nav-link active" onclick="showPage('inicio')"
+              <a
+                href="#"
+                class="nav-link active"
+                onclick="showPage('inicio'); return false;"
                 >Inicio</a
               >
-              <a href="#" class="nav-link" onclick="showPage('menu')">Menú</a>
-              <a href="#" class="nav-link" onclick="showPage('contacto')"
+              <a
+                href="#"
+                class="nav-link"
+                onclick="showPage('menu'); return false;"
+                >Menú</a
+              >
+              <a
+                href="#"
+                class="nav-link"
+                onclick="showPage('contacto'); return false;"
                 >Contacto</a
               >
             </nav>
@@ -181,18 +192,31 @@
       </div>
 
       <!-- Página Inicio -->
-      <div id="pageInicio" class="page">
-        <section class="hero-section">
-          <div class="container">
-            <div class="hero-content">
-              <h2>SNACK CENTER</h2>
-              <p>La mejor comida rápida de Aguascalientes</p>
-              <button class="btn-primary btn-large" onclick="showPage('menu')">
-                Ver Menú
-              </button>
-            </div>
-            <div class="hero-image">
-              <img src="assets/hero-banner.jpg" alt="Banner Principal" />
+      <div id="pageInicio" class="page active">
+        <section
+          class="hero-section"
+          style="background-image: url('assets/hero-banner.jpg')"
+        >
+          <div class="hero-overlay">
+            <div class="container">
+              <div class="hero-content">
+                <h2>SNACK CENTER</h2>
+                <p>La mejor comida rápida de Aguascalientes</p>
+                <div class="hero-buttons">
+                  <button
+                    class="btn-primary btn-large"
+                    onclick="showPage('menu'); return false;"
+                  >
+                    Ver Menú
+                  </button>
+                  <button
+                    class="btn-primary btn-large"
+                    onclick="showPage('contacto'); return false;"
+                  >
+                    Contactar
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -202,6 +226,29 @@
             <h2 class="section-title">Productos Destacados</h2>
             <div class="productos-grid" id="productosDestacados">
               <!-- Se llena dinámicamente -->
+            </div>
+            <div class="ver-todos-container">
+              <button
+                class="btn-ver-todos"
+                onclick="showPage('menu'); return false;"
+              >
+                Ver Todos los Productos <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="cta-section">
+          <div class="container">
+            <div class="cta-content">
+              <h3>¿Listo para ordenar?</h3>
+              <p>
+                Haz tu pedido ahora y disfruta de la mejor comida rápida de
+                Aguascalientes
+              </p>
+              <button class="btn-cta" onclick="showPage('menu'); return false;">
+                Ordenar Ahora <i class="fas fa-arrow-right"></i>
+              </button>
             </div>
           </div>
         </section>
@@ -214,19 +261,39 @@
             <h2 class="section-title">Nuestro Menú</h2>
 
             <div class="category-filters">
-              <button class="filter-btn active" data-category="todos">
+              <button
+                class="filter-btn active"
+                data-category="todos"
+                onclick="filterProducts('todos'); return false;"
+              >
                 Todos
               </button>
-              <button class="filter-btn" data-category="hamburguesas">
+              <button
+                class="filter-btn"
+                data-category="hamburguesas"
+                onclick="filterProducts('hamburguesas'); return false;"
+              >
                 Hamburguesas
               </button>
-              <button class="filter-btn" data-category="hotdogs">
+              <button
+                class="filter-btn"
+                data-category="hotdogs"
+                onclick="filterProducts('hotdogs'); return false;"
+              >
                 Hot Dogs
               </button>
-              <button class="filter-btn" data-category="bebidas">
+              <button
+                class="filter-btn"
+                data-category="bebidas"
+                onclick="filterProducts('bebidas'); return false;"
+              >
                 Bebidas
               </button>
-              <button class="filter-btn" data-category="acompañamientos">
+              <button
+                class="filter-btn"
+                data-category="acompañamientos"
+                onclick="filterProducts('acompañamientos'); return false;"
+              >
                 Acompañamientos
               </button>
             </div>
@@ -286,7 +353,7 @@
         </section>
       </div>
 
-      <!-- Modal del Carrito (Pantalla Completa) -->
+      <!-- Modal del Carrito -->
       <div id="cartModal" class="modal">
         <div class="modal-content modal-cart">
           <span class="close close-cart">&times;</span>
@@ -534,18 +601,6 @@
       </footer>
     </div>
 
-    <script>
-      // Inicialización básica
-      window.addEventListener("load", function () {
-        if (localStorage.getItem("currentUser")) {
-          document.getElementById("splashModal").classList.remove("active");
-          document.getElementById("mainContainer").style.display = "block";
-          initializeData();
-          renderProductosDestacados();
-          renderProductsMenu();
-        }
-      });
-    </script>
     <script src="script.js"></script>
   </body>
 </html>

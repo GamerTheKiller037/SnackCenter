@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setupEventListeners() {
-  // Splash screen
+  // Splash
   document.querySelectorAll(".splash-tab").forEach((btn) => {
     btn.addEventListener("click", function () {
       const tab = this.dataset.tab;
@@ -282,7 +282,7 @@ function setupEventListeners() {
     .getElementById("splashRegisterForm")
     .addEventListener("submit", handleSplashRegister);
 
-  // Navigation
+  // Header
   document
     .getElementById("userBtnHeader")
     .addEventListener("click", toggleUserMenu);
@@ -330,7 +330,7 @@ function setupEventListeners() {
     }
   });
 
-  // Filtros
+  // Filtros de categoría
   document.querySelectorAll(".filter-btn").forEach((btn) => {
     btn.addEventListener("click", function () {
       document
@@ -411,7 +411,15 @@ function showPage(pageName) {
   document
     .querySelectorAll(".nav-link")
     .forEach((link) => link.classList.remove("active"));
-  event.target.classList.add("active");
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    if (
+      link.textContent.toLowerCase().includes(pageName.toLowerCase()) ||
+      (pageName === "inicio" &&
+        link.textContent.toLowerCase().includes("inicio"))
+    ) {
+      link.classList.add("active");
+    }
+  });
 
   window.scrollTo(0, 0);
 }
@@ -551,7 +559,7 @@ function logout() {
 
 function renderProductosDestacados() {
   const grid = document.getElementById("productosDestacados");
-  const destacados = products.slice(0, 4);
+  const destacados = products.slice(0, 3);
 
   grid.innerHTML = destacados
     .map(
@@ -564,13 +572,13 @@ function renderProductosDestacados() {
                 <h3>${product.name}</h3>
                 <p>${product.description}</p>
                 <div class="product-footer">
-                    <span class="product-price">${product.price.toFixed(
+                    <span class="product-price">$${product.price.toFixed(
                       2
                     )}</span>
                     <button class="add-to-cart-btn" onclick="addToCart(${
                       product.id
                     })">
-                        <i class="fas fa-cart-plus"></i> Agregar
+                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
                     </button>
                 </div>
             </div>
@@ -598,13 +606,13 @@ function renderProductsMenu(category = "todos") {
                 <h3>${product.name}</h3>
                 <p>${product.description}</p>
                 <div class="product-footer">
-                    <span class="product-price">${product.price.toFixed(
+                    <span class="product-price">$${product.price.toFixed(
                       2
                     )}</span>
                     <button class="add-to-cart-btn" onclick="addToCart(${
                       product.id
                     })">
-                        <i class="fas fa-cart-plus"></i> Agregar
+                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
                     </button>
                 </div>
             </div>
@@ -654,7 +662,7 @@ function updateCartUI() {
   const cartTotalModal = document.getElementById("cartTotalModal");
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  cartTotalModal.textContent = `${total.toFixed(2)}`;
+  cartTotalModal.textContent = `$${total.toFixed(2)}`;
 
   if (cart.length === 0) {
     cartItemsModal.innerHTML =
@@ -671,7 +679,7 @@ function updateCartUI() {
                 </div>
                 <div class="cart-item-info">
                     <h4>${item.name}</h4>
-                    <p class="cart-item-price">${item.price.toFixed(2)}</p>
+                    <p class="cart-item-price">$${item.price.toFixed(2)}</p>
                     <div class="cart-item-quantity">
                         <button class="qty-btn" onclick="updateQuantity(${
                           item.id
@@ -736,13 +744,13 @@ function openCheckoutModal() {
       (item) => `
         <div class="checkout-item">
             <span>${item.quantity}x ${item.name}</span>
-            <span>${(item.price * item.quantity).toFixed(2)}</span>
+            <span>$${(item.price * item.quantity).toFixed(2)}</span>
         </div>
     `
     )
     .join("");
 
-  checkoutTotal.textContent = `${total.toFixed(2)}`;
+  checkoutTotal.textContent = `$${total.toFixed(2)}`;
 
   document.getElementById("cartModal").classList.remove("active");
   document.getElementById("checkoutModal").classList.add("active");
@@ -803,7 +811,7 @@ function generateTicket(order) {
                 (item) => `
                 <div class="ticket-item">
                     <span>${item.quantity}x ${item.name}</span>
-                    <span>${(item.price * item.quantity).toFixed(2)}</span>
+                    <span>$${(item.price * item.quantity).toFixed(2)}</span>
                 </div>
             `
               )
@@ -811,7 +819,7 @@ function generateTicket(order) {
         </div>
         <div class="ticket-total">
             <span>TOTAL</span>
-            <span>${order.total.toFixed(2)}</span>
+            <span>$${order.total.toFixed(2)}</span>
         </div>
         <div class="ticket-footer">
             <p>¡Gracias por tu preferencia!</p>
@@ -832,11 +840,11 @@ function sendOrderWhatsApp() {
   message += `*Dirección:* ${order.userAddress}\n\n`;
   message += `*PRODUCTOS:*\n`;
   order.items.forEach((item) => {
-    message += `${item.quantity}x ${item.name} - ${(
+    message += `${item.quantity}x ${item.name} - $${(
       item.price * item.quantity
     ).toFixed(2)}\n`;
   });
-  message += `\n*TOTAL: ${order.total.toFixed(2)}*`;
+  message += `\n*TOTAL: $${order.total.toFixed(2)}*`;
 
   const whatsappNumber = "5214491234567";
   const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
@@ -916,7 +924,7 @@ function openOrdersModal() {
                         (item) => `
                         <div class="order-item">
                             <span>${item.quantity}x ${item.name}</span>
-                            <span>${(item.price * item.quantity).toFixed(
+                            <span>$${(item.price * item.quantity).toFixed(
                               2
                             )}</span>
                         </div>
@@ -925,7 +933,7 @@ function openOrdersModal() {
                       .join("")}
                 </div>
                 <div class="order-footer">
-                    <span class="order-total">Total: ${order.total.toFixed(
+                    <span class="order-total">Total: $${order.total.toFixed(
                       2
                     )}</span>
                 </div>
@@ -974,7 +982,7 @@ function renderAdminProducts() {
                 <p>${product.description}</p>
                 <p><small>Categoría: ${product.category}</small></p>
             </div>
-            <span class="admin-item-price">${product.price.toFixed(2)}</span>
+            <span class="admin-item-price">$${product.price.toFixed(2)}</span>
             <div class="admin-item-actions">
                 <button class="btn-edit" onclick="editProduct(${product.id})">
                     <i class="fas fa-edit"></i> Editar
@@ -1093,6 +1101,7 @@ function deleteProduct(productId) {
   products = products.filter((p) => p.id !== productId);
   saveToLocalStorage();
   renderProductsMenu();
+  renderProductosDestacados();
   renderAdminProducts();
   showNotification("Producto eliminado");
 }
@@ -1134,11 +1143,11 @@ function showNotification(message) {
         position: fixed;
         top: 20px;
         right: 20px;
-        background-color: var(--success-color);
+        background-color: #27ae60;
         color: white;
         padding: 1rem 1.5rem;
         border-radius: 5px;
-        box-shadow: var(--shadow-lg);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         z-index: 10000;
         animation: slideIn 0.3s ease;
     `;
@@ -1150,4 +1159,5 @@ function showNotification(message) {
   }, 3000);
 }
 
-console.log("Snack Center inicializado");
+console.log("Snack Center inicializado correctamente");
+console.log("Credenciales de admin: admin@snackcenter.com / admin123");
