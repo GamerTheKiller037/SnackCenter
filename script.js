@@ -378,33 +378,42 @@ function setupEventListeners() {
     .addEventListener("click", sendOrderWhatsApp);
 }
 
+// FUNCIÓN SHOWPAGE CORREGIDA
 function showPage(pageName) {
-  document
-    .querySelectorAll(".page")
-    .forEach((p) => p.classList.remove("active"));
-  document
-    .getElementById(
-      "page" + pageName.charAt(0).toUpperCase() + pageName.slice(1)
-    )
-    .classList.add("active");
+  // Ocultar todas las páginas
+  document.querySelectorAll('.page').forEach(page => {
+    page.style.display = 'none';
+    page.classList.remove('active');
+  });
 
-  document
-    .querySelectorAll(".nav-link")
-    .forEach((link) => link.classList.remove("active"));
-  document.querySelectorAll(".nav-link").forEach((link) => {
-    if (
-      link.textContent.toLowerCase().includes(pageName.toLowerCase()) ||
-      (pageName === "inicio" &&
-        link.textContent.toLowerCase().includes("inicio"))
-    ) {
-      link.classList.add("active");
+  // Mostrar la página seleccionada
+  const targetPage = document.getElementById('page' + pageName.charAt(0).toUpperCase() + pageName.slice(1));
+  if (targetPage) {
+    targetPage.style.display = 'block';
+    targetPage.classList.add('active');
+  }
+
+  // Actualizar navegación activa
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('active');
+  });
+  
+  // Agregar clase active al link correspondiente
+  document.querySelectorAll('.nav-link').forEach(link => {
+    const linkText = link.textContent.toLowerCase().trim();
+    if (linkText === pageName.toLowerCase() || 
+        (pageName === 'inicio' && linkText === 'inicio')) {
+      link.classList.add('active');
     }
   });
 
-  if (typeof loadPageContent === "function") {
+  // Cargar el contenido de la página
+  if (typeof loadPageContent === 'function') {
     loadPageContent(pageName);
   }
-  window.scrollTo(0, 0);
+  
+  // Scroll al inicio
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function handleSplashLogin(e) {
